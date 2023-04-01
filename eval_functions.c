@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 /* Начальный момент порядка k */
-double beg_moment(double * x, double * prob, int n, double k)
+double beg_moment(double * x, double * prob, int n, int k)
 {
     int i;
     double res = 0;
@@ -17,7 +17,7 @@ double math_exp(double * x, double * prob, int n)
     return beg_moment(x, prob, n, 1);
 }
 /* Центральный начальный момент порядка k */
-double central_beg_moment(double * x, double * prob, int n, double k)
+double central_beg_moment(double * x, double * prob, int n, int k)
 {
     int i;
     double exp = math_exp(x, prob, n);
