@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <math.h>
-/* Начальный момент порядка k */
+/* РќР°С‡Р°Р»СЊРЅС‹Р№ РјРѕРјРµРЅС‚ РїРѕСЂСЏРґРєР° k */
 double beg_moment(double * x, double * prob, int n, double k)
 {
     int i;
@@ -11,12 +11,12 @@ double beg_moment(double * x, double * prob, int n, double k)
     }
     return res;
 }
-/* Иатематическое ожидание */
+/* РњР°С‚РµРјР°С‚РёС‡РµСЃРєРѕРµ РѕР¶РёРґР°РЅРёРµ */
 double math_exp(double * x, double * prob, int n)
 {
     return beg_moment(x, prob, n, 1);
 }
-/* Центральный начальный момент порядка k */
+/* Р¦РµРЅС‚СЂР°Р»СЊРЅС‹Р№ РЅР°С‡Р°Р»СЊРЅС‹Р№ РјРѕРјРµРЅС‚ РїРѕСЂСЏРґРєР° k */
 double central_beg_moment(double * x, double * prob, int n, double k)
 {
     int i;
@@ -28,27 +28,27 @@ double central_beg_moment(double * x, double * prob, int n, double k)
     }
     return res;
 }
-/* Дисперсия*/
+/* Р”РёСЃРїРµСЂСЃРёСЏ*/
 double dispersion(double * x, double * prob, int n)
 {
     return central_beg_moment(x, prob, n, 2);
 }
-/* Среднеквадратичное отклонение */
+/* РЎСЂРµРґРЅРµРєРІР°РґСЂР°С‚РёС‡РЅРѕРµ РѕС‚РєР»РѕРЅРµРЅРёРµ */
 double mean_square_deviation(double * x, double * prob, int n)
 {
     return pow(dispersion(x, prob, n), 0.5);
 }
-/* Асимметрия */
+/* РђСЃРёРјРјРµС‚СЂРёСЏ */
 double asymmetry(double * x, double * prob, int n)
 {
     return (central_beg_moment(x, prob, n, 3) / pow(mean_square_deviation(x, prob, n), 3));
 }
-/* Эксцесс */
+/* Р­РєСЃС†РµСЃСЃ */
 double excess(double * x, double * prob, int n)
 {
     return (central_beg_moment(x, prob, n, 4) / pow(dispersion(x, prob, n), 2) - 3);
 }
-/* Мода */
+/* РњРѕРґР° */
 double mode(double * x, double * prob, int n)
 {
     int res = 0;
@@ -57,19 +57,4 @@ double mode(double * x, double * prob, int n)
         if (prob[res] < prob[i])
             res = i;
     return x[res];
-}
-/* На потестить */
-int main()
-{
-    double x[] = {1., 2., 3.};
-    double prob[] = {0.45, 0.3, 0.35};
-    printf("%.1f\n", beg_moment(x, prob, 3, 1));
-    printf("%.1f\n", math_exp(x, prob, 3));
-    printf("%.1f\n", central_beg_moment(x, prob, 3, 2));
-    printf("%.1f\n", dispersion(x, prob, 3));
-    printf("%.1f\n", mean_square_deviation(x, prob, 3));
-    printf("%.1f\n", asymmetry(x, prob, 3));
-    printf("%.1f\n", excess(x, prob, 3));
-    printf("%.1f\n", mode(x, prob, 3));
-    return 0;
 }
